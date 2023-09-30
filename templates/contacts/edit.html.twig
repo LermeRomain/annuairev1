@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Contacts{% endblock %}
+
+{% block body %}
+    {% include 'navbar.html.twig' %}
+    <div class="container">
+        <h1>Edit Contacts</h1>
+
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                {{ form_start(form, {'attr': {'class': 'form'}}) }}
+
+                <div class="form-group">
+                    {{ form_label(form.name, 'Name') }}
+                    {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.email, 'Email') }}
+                    {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.phone, 'Phone') }}
+                    {{ form_widget(form.phone, {'attr': {'class': 'form-control'}}) }}
+                </div>
+
+                <button type="submit" class="btn btn-primary">{{ button_label }}</button>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+
+        <a href="{{ path('app_contacts_index') }}" class="btn btn-secondary">Back to list</a>
+        {% if is_granted('ROLE_ADMIN') %}
+            {{ include('contacts/_delete_form.html.twig') }}
+        {% endif %}
+    </div>
+{% endblock %}

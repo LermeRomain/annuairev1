@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contacts{% endblock %}
+
+{% block body %}
+    {% include 'navbar.html.twig' %}
+    <div class="container">
+        <h1 class="mt-4">Contact</h1>
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <h2 class="card-title">{{ contact.name }}</h2>
+                <p class="card-text"><strong>Email:</strong> {{ contact.email }}</p>
+                <p class="card-text"><strong>Téléphone:</strong> {{ contact.phone }}</p>
+                <a href="{{ path('app_contacts_edit', {'id': contact.id}) }}" class="btn btn-primary mt-2">Modifier</a>
+                {% if is_granted('ROLE_ADMIN') %}
+                    {{ include('contacts/_delete_form.html.twig') }}
+                {% endif %}
+            </div>
+        </div>
+
+        <h2 class="mt-4">Messages du contact</h2>
+        <div class="card">
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Contenu</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for message in contact.messages|reverse %}
+                        <tr>
+                            <td>{{ message.id }}</td>
+                            <td>{{ message.content }}</td>
+                            <td>{{ message.createdAt ? message.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td>
+                                <a href="{{ path('app_messages_edit', {'id': message.id}) }}" class="btn btn-primary">Modifier</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <a href="{{ path('app_contact_pdf', {'id': contact.id}) }}" class="btn btn-danger mt-3">Exporter en PDF</a>
+
+    </div>
+{% endblock %}

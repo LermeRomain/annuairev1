@@ -1,0 +1,14 @@
+<h2 class="mt-4">Messages du contact</h2>
+<div class="row">
+    {% for message in messages|reverse %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Message #{{ message.id }}</h5>
+                    <p class="card-text">{{ message.content }}</p>
+                    <p class="card-text"><small class="text-muted">{{ message.createdAt ? message.createdAt|date('Y-m-d H:i:s') : '' }}</small></p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>

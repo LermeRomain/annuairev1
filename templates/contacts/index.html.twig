@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Contacts{% endblock %}
+
+{% block body %}
+    {% include 'navbar.html.twig' %}
+    <div class="container">
+        <h1>Liste des Contacts</h1>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Email</th>
+                <th>Téléphone</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for contact in contacts %}
+                <tr>
+                    <td>{{ contact.id }}</td>
+                    <td>{{ contact.name }}</td>
+                    <td>{{ contact.email }}</td>
+                    <td>{{ contact.phone }}</td>
+                    <td>
+                        <a href="{{ path('app_contacts_show', {'id': contact.id}) }}" class="btn btn-info btn-sm">Voir</a>
+                        <a href="{{ path('app_contacts_edit', {'id': contact.id}) }}" class="btn btn-warning btn-sm">Modifier</a>
+                        <a href="{{ path('app_messages_new', {'contactId': contact.id}) }}" class="btn btn-primary btn-sm">Ajouter Message</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">Aucun enregistrement trouvé</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('app_contacts_new') }}" class="btn btn-success mt-2">Créer un nouveau contact</a>
+    </div>
+{% endblock %}
